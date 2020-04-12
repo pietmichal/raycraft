@@ -395,12 +395,12 @@ int main(void)
         BeginMode3D(camera);
 
         // Clouds
-        DrawCube((Vector3){0.0f, 200.0f, 0.0f}, 100.0f, 1.0f, 37.0f, WHITE);
-        DrawCube((Vector3){-50.0f, 200.0f, 1.0f}, 49.0f, 1.0f, 40.0f, WHITE);
-        DrawCube((Vector3){-300.0f, 200.0f, 22.0f}, 60.0f, 1.0f, 300.0f, WHITE);
-        DrawCube((Vector3){200.0f, 200.0f, -50.0f}, 30.0f, 1.0f, 37.0f, WHITE);
-        DrawCube((Vector3){1000.0f, 200.0f, 200.0f}, 30.0f, 1.0f, 37.0f, WHITE);
-        DrawCube((Vector3){50.0f, 200.0f, 30.0f}, 30.0f, 1.0f, 37.0f, WHITE);
+        DrawCube((Vector3){300.0f, 200.0f, 100.0f}, 100.0f, 10.0f, 37.0f, WHITE);
+        DrawCube((Vector3){250.0f, 200.0f, 150.0f}, 49.0f, 10.0f, 40.0f, WHITE);
+        DrawCube((Vector3){0.0f, 200.0f, 47.0f}, 60.0f, 10.0f, 300.0f, WHITE);
+        DrawCube((Vector3){200.0f, 200.0f, -50.0f}, 30.0f, 10.0f, 37.0f, WHITE);
+        DrawCube((Vector3){1000.0f, 200.0f, 200.0f}, 30.0f, 10.0f, 37.0f, WHITE);
+        DrawCube((Vector3){50.0f, 200.0f, 30.0f}, 30.0f, 10.0f, 37.0f, WHITE);
         // End of clouds
 
         DrawModel(worldModel, (Vector3){0, 0, 0}, 1.0f, WHITE);
