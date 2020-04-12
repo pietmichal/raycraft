@@ -43,7 +43,7 @@ int main(void)
                 DrawCube((Vector3){250.0f, 200.0f, 150.0f}, 49.0f, 10.0f, 40.0f, WHITE);
                 DrawCube((Vector3){0.0f, 200.0f, 47.0f}, 60.0f, 10.0f, 300.0f, WHITE);
                 DrawCube((Vector3){200.0f, 200.0f, -50.0f}, 30.0f, 10.0f, 37.0f, WHITE);
-                DrawCube((Vector3){1000.0f, 200.0f, 200.0f}, 30.0f, 10.0f, 37.0f, WHITE);
+                DrawCube((Vector3){1000.0f, 800.0f, 800.0f}, 30.0f, 10.0f, 37.0f, WHITE);
                 DrawCube((Vector3){50.0f, 200.0f, 30.0f}, 30.0f, 10.0f, 37.0f, WHITE);
                 // World
                 DrawModel(worldModel, (Vector3){0, 0, 0}, 1.0f, WHITE);
