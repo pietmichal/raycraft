@@ -42,7 +42,7 @@ int *GenerateWorld()
                 int maxY = round(WORLD_MAX_Y * perlin2d(x, z, 0.1f, WORLD_MAX_Y));
                 if (y <= maxY)
                 {
-                    SetWorldCube(world, x, y, z, rand() % 2 + 1);
+                    SetWorldCube(world, x, y, z, 1);
                 }
                 else
                 {

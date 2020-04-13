@@ -191,7 +191,7 @@ static float *GetCubeVertices(float x, float y, float z)
     return cubeVertices;
 }
 
-Mesh GetBlockMesh(int *world, int blockType)
+Model GetWorldModel(int *world)
 {
     Mesh mesh = {0};
     mesh.vboId = (unsigned int *)RL_CALLOC(MAX_MESH_VBO, sizeof(unsigned int));
@@ -210,7 +210,7 @@ Mesh GetBlockMesh(int *world, int blockType)
         {
             for (int z = 0; z < WORLD_MAX_Z; z++)
             {
-                bool blockExists = GetWorldCube(world, x, y, z) == blockType;
+                bool blockExists = GetWorldCube(world, x, y, z) == 1;
                 if (blockExists)
                 {
                     float *blockVertices = GetCubeVertices(x, y, z);
@@ -252,27 +252,9 @@ Mesh GetBlockMesh(int *world, int blockType)
 
     rlLoadMesh(&mesh, false);
 
-    return mesh;
-}
+    Model worldModel = LoadModelFromMesh(mesh);
 
-Model GetWorldModel(int *world)
-{
-    Mesh grass = GetBlockMesh(world, 1);
-    Mesh block = GetBlockMesh(world, 2);
-
-    Model worldModel = LoadModelFromMesh(grass);
-
-    free(worldModel.meshes);
-    worldModel.meshes = malloc(sizeof(Mesh) * 2);
-
-    worldModel.meshes[0] = grass;
-    worldModel.meshes[1] = block;
-
-    free(worldModel.materials);
-    worldModel.materials = malloc(sizeof(Material) * 2);
-
-    worldModel.materials[0].maps[MAP_DIFFUSE].texture = (Texture){0};//LoadTexture("resources/grass.png");
-    worldModel.materials[1].maps[MAP_DIFFUSE].texture = LoadTexture("resources/block.png");
+    worldModel.materials[0].maps[MAP_DIFFUSE].texture = LoadTexture("resources/grass.png");
 
     return worldModel;
 }
