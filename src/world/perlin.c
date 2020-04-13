@@ -1,6 +1,8 @@
 #ifndef _PERLIN_C_
 #define _PERLIN_C_
 
+#include "perlin.h"
+
 static int SEED = 1944;
 
 static int hash[] = {208, 34, 231, 213, 32, 248, 233, 56, 161, 78, 24, 140, 71, 48, 140, 254, 245, 255, 247, 247, 40,
