@@ -1,5 +1,7 @@
 # Raycraft
  
+by Michał Pietraszko ([Follow him on twitter](https://twitter.com/pietmichal))
+
 Minecraft-clone made using [raylib](https://github.com/raysan5/raylib).
 
 Work in progress.
