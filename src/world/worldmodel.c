@@ -1,11 +1,121 @@
-#ifndef _WORLDMODEL_C_
-#define _WORLDMODEL_C_
+#include "worldmodel.h"
 
-#include "raylib.h"
-#include "rlgl.h"
-#include "worldgeneration.c"
+#include <stdlib.h>
+#include <string.h>
+#include <rlgl.h>
+#include "worldgeneration.h"
 
 #define MAX_MESH_VBO 7
+
+static float texcoordsRef[] = {
+        // face 1
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+
+        // face 2
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+
+        // face 3
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+
+        // face 4
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+
+        // face 5
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+
+        // face 6
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 0.0f};
+
+static float normalsRef[] = {
+        // face 1
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+
+        // face 2
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+
+        // face 3
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+
+        // face 4
+        0.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 0.0f,
+
+        0.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 0.0f,
+
+        // face 5
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+
+        // face 6
+        -1.0f, 0.0f, 0.0f,
+        -1.0f, 0.0f, 0.0f,
+        -1.0f, 0.0f, 0.0f,
+
+        -1.0f, 0.0f, 0.0f,
+        -1.0f, 0.0f, 0.0f,
+        -1.0f, 0.0f, 0.0f};
 
 // note: Yes, the implementation of the world model is dirty.
 // todo: reimplement as chunks
@@ -83,131 +193,21 @@ Model GetWorldModel(int *world)
     Mesh mesh = {0};
     mesh.vboId = (unsigned int *)RL_CALLOC(MAX_MESH_VBO, sizeof(unsigned int));
 
-    float texcoordsRef[] = {
-        // face 1
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-
-        // face 2
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-
-        // face 3
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-
-        // face 4
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-
-        // face 5
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-
-        // face 6
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 0.0f};
-
-    float normalsRef[] = {
-        // face 1
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-
-        // face 2
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
-
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
-
-        // face 3
-        0.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-
-        0.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-
-        // face 4
-        0.0f, -1.0f, 0.0f,
-        0.0f, -1.0f, 0.0f,
-        0.0f, -1.0f, 0.0f,
-
-        0.0f, -1.0f, 0.0f,
-        0.0f, -1.0f, 0.0f,
-        0.0f, -1.0f, 0.0f,
-
-        // face 5
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-
-        // face 6
-        -1.0f, 0.0f, 0.0f,
-        -1.0f, 0.0f, 0.0f,
-        -1.0f, 0.0f, 0.0f,
-
-        -1.0f, 0.0f, 0.0f,
-        -1.0f, 0.0f, 0.0f,
-        -1.0f, 0.0f, 0.0f};
-
     float *vertices = RL_MALLOC(36 * 3 * WORLD_MAX_X * WORLD_MAX_Y * WORLD_MAX_Z * sizeof(float));
     float *texcoords = RL_MALLOC(36 * 2 * WORLD_MAX_X * WORLD_MAX_Y * WORLD_MAX_Z * sizeof(float));
     float *normals = RL_MALLOC(36 * 3 * WORLD_MAX_X * WORLD_MAX_Y * WORLD_MAX_Z * sizeof(float));
-    
+
     int verticesCount = 0;
     int texcoordsCount = 0;
     int normalsCount = 0;
 
     for (int x = 0; x < WORLD_MAX_X; x++)
     {
-        for (int z = 0; z < WORLD_MAX_Z; z++)
+        for (int y = 0; y < WORLD_MAX_Y; y++)
         {
-            for (int y = 0; y < WORLD_MAX_Y; y++)
+            for (int z = 0; z < WORLD_MAX_Z; z++)
             {
-                bool blockExists = GetWorldCube(world, x, z, y) == 1;
+                bool blockExists = GetWorldCube(world, x, y, z) == 1;
                 if (blockExists)
                 {
                     float *blockVertices = GetCubeVertices(x, y, z);
@@ -243,14 +243,15 @@ Model GetWorldModel(int *world)
     mesh.vertexCount = verticesCount / 3; // fixme: Why divide by 3 ???
     mesh.triangleCount = (verticesCount / 3) / 2; // fixme: Why divide by 3 and 2 ???
 
+    RL_FREE(vertices);
+    RL_FREE(texcoords);
+    RL_FREE(normals);
+
     rlLoadMesh(&mesh, false);
 
     Model worldModel = LoadModelFromMesh(mesh);
-    Texture2D texture = LoadTexture("resources/grass.png");
 
-    worldModel.materials[0].maps[MAP_DIFFUSE].texture = texture;
+    worldModel.materials[0].maps[MAP_DIFFUSE].texture = LoadTexture("resources/grass.png");
 
     return worldModel;
 }
-
-#endif

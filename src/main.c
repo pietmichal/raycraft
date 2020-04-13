@@ -1,11 +1,9 @@
-#include "raylib.h"
-#include "raymath.h"
-#include "stdlib.h"
-#include "rlgl.h"
-#include <stdio.h>
-#include <string.h>
-#include "worldgeneration.c"
-#include "worldmodel.c"
+#include "world/worldgeneration.h"
+#include "world/worldmodel.h"
+#include "controller.h"
+#include "util.h"
+
+#include <raymath.h>
 
 int main(void)
 {
@@ -14,30 +12,23 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "Raycraft");
 
-    // todo: implement custom camera that fits the game
-    Camera camera = {0};
-    camera.position = (Vector3){4.0f, 10.0f, 4.0f};
-    camera.target = (Vector3){0.0f, 1.8f, 0.0f};
-    camera.up = (Vector3){0.0f, 1.0f, 0.0f};
-    camera.fovy = 60.0f;
-    camera.type = CAMERA_PERSPECTIVE;
-    SetCameraMode(camera, CAMERA_FIRST_PERSON);
-
     SetTargetFPS(60);
 
     int *world = GenerateWorld();
     Model worldModel = GetWorldModel(world);
 
+    struct Controller controller;
+    InitializeController(&controller, world);
+
     while (!WindowShouldClose())
     {
-        UpdateCamera(&camera);
-
         BeginDrawing();
         {
             ClearBackground(SKYBLUE);
 
-            BeginMode3D(camera);
+            BeginMode3D(controller.cam);
             {
+                UpdateController(&controller);
                 // Clouds
                 DrawCube((Vector3){600.0f, 200.0f, 600.0f}, 100.0f, 10.0f, 37.0f, WHITE);
                 DrawCube((Vector3){250.0f, 200.0f, 150.0f}, 49.0f, 10.0f, 40.0f, WHITE);
