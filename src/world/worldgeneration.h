@@ -5,7 +5,7 @@
 
 #define WORLD_MAX_X 100
 #define WORLD_MAX_Z 100
-#define WORLD_MAX_Y 10
+#define WORLD_MAX_Y 16
 
 #include <raylib.h>
 #include <raymath.h>

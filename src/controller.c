@@ -32,8 +32,8 @@ bool isColliderInDirection(Vector3 position, Vector3 direction, int *world)
 
 void InitializeController(Controller *controller, int *world)
 {
-    controller->cam.position = (Vector3){1.0f, 10.0f, 1.0f};
-    controller->cam.target = (Vector3){5.0f, 10.0f, 5.0f};
+    controller->cam.position = (Vector3){50.0f, 75.0f, 50.0f};
+    controller->cam.target = (Vector3){50.0f, 75.0f, 50.0f};
     controller->cam.up = (Vector3){0.0f, 1.0f, 0.0f};
     controller->cam.fovy = 60.0f;
     controller->cam.type = CAMERA_PERSPECTIVE;
@@ -73,7 +73,7 @@ void UpdateController(Controller *controller)
                   sinf(controller->rotation.x)*direction[2])/PLAYER_MOVEMENT_SENSITIVITY;
 
     if (IsKeyPressed(KEY_SPACE))
-        movement.y = 0.2f;
+        movement.y = 0.12f;
 
     // -------------------- Collision stuff --------------------
 
@@ -145,6 +145,6 @@ void UpdateController(Controller *controller)
 Vector3 GetPlayerBlockPos(Controller *controller)
 {
     return (Vector3){roundf(controller->cam.position.x),
-                     roundf(controller->cam.position.y - 1),
+                     roundf(controller->cam.position.y),
                      roundf(controller->cam.position.z)};
 }
