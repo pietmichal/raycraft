@@ -8,114 +8,116 @@
 #define MAX_MESH_VBO 7
 
 static float texcoordsRef[] = {
-        // face 1
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
+    // face 1
+    0.5f, 1.0f,
+    0.25f, 1.0f,
+    0.25f, 0.0f,
 
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 0.0f,
+    0.25f, 0.0f,
+    0.5f, 0.0f,
+    0.5f, 1.0f,
 
-        // face 2
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
 
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-        1.0f, 0.0f,
+    // face 2
+    0.25f, 1.0f,
+    0.25f, 0.0f,
+    0.5f, 0.0f,
 
-        // face 3
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-        1.0f, 0.0f,
+    0.5f, 0.0f,
+    0.5f, 1.0f,
+    0.25f, 1.0f,
 
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
+    // face 3 (top)
+    0.0f, 0.0f,
+    0.25f, 0.0f,
+    0.25f, 1.0f,
 
-        // face 4
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 0.0f,
+    0.25f, 1.0f,
+    0.0f, 1.0f,
+    0.0f, 0.0f,
 
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
+    // face 4 (bottom)
+    0.0f, 0.0f,
+    0.25f, 0.0f,
+    0.25f, 1.0f,
 
-        // face 5
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
+    0.25f, 1.0f,
+    0.0f, 1.0f,
+    0.0f, 0.0f,
 
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-        1.0f, 0.0f,
+    // face 5
+    0.25f, 1.0f,
+    0.25f, 0.0f,
+    0.5f, 0.0f,
 
-        // face 6
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
+    0.5f, 0.0f,
+    0.5f, 1.0f,
+    0.25f, 1.0f,
 
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 0.0f};
+    // face 6
+    0.5f, 1.0f,
+    0.25f, 1.0f,
+    0.25f, 0.0f,
+
+    0.25f, 0.0f,
+    0.5f, 0.0f,
+    0.5f, 1.0f,
+};
 
 static float normalsRef[] = {
-        // face 1
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
+    // face 1
+    0.0f, 0.0f, 1.0f,
+    0.0f, 0.0f, 1.0f,
+    0.0f, 0.0f, 1.0f,
 
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
+    0.0f, 0.0f, 1.0f,
+    0.0f, 0.0f, 1.0f,
+    0.0f, 0.0f, 1.0f,
 
-        // face 2
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
+    // face 2
+    0.0f, 0.0f, -1.0f,
+    0.0f, 0.0f, -1.0f,
+    0.0f, 0.0f, -1.0f,
 
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
+    0.0f, 0.0f, -1.0f,
+    0.0f, 0.0f, -1.0f,
+    0.0f, 0.0f, -1.0f,
 
-        // face 3
-        0.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
+    // face 3
+    0.0f, 1.0f, 0.0f,
+    0.0f, 1.0f, 0.0f,
+    0.0f, 1.0f, 0.0f,
 
-        0.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
+    0.0f, 1.0f, 0.0f,
+    0.0f, 1.0f, 0.0f,
+    0.0f, 1.0f, 0.0f,
 
-        // face 4
-        0.0f, -1.0f, 0.0f,
-        0.0f, -1.0f, 0.0f,
-        0.0f, -1.0f, 0.0f,
+    // face 4
+    0.0f, -1.0f, 0.0f,
+    0.0f, -1.0f, 0.0f,
+    0.0f, -1.0f, 0.0f,
 
-        0.0f, -1.0f, 0.0f,
-        0.0f, -1.0f, 0.0f,
-        0.0f, -1.0f, 0.0f,
+    0.0f, -1.0f, 0.0f,
+    0.0f, -1.0f, 0.0f,
+    0.0f, -1.0f, 0.0f,
 
-        // face 5
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
+    // face 5
+    1.0f, 0.0f, 0.0f,
+    1.0f, 0.0f, 0.0f,
+    1.0f, 0.0f, 0.0f,
 
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
+    1.0f, 0.0f, 0.0f,
+    1.0f, 0.0f, 0.0f,
+    1.0f, 0.0f, 0.0f,
 
-        // face 6
-        -1.0f, 0.0f, 0.0f,
-        -1.0f, 0.0f, 0.0f,
-        -1.0f, 0.0f, 0.0f,
+    // face 6
+    -1.0f, 0.0f, 0.0f,
+    -1.0f, 0.0f, 0.0f,
+    -1.0f, 0.0f, 0.0f,
 
-        -1.0f, 0.0f, 0.0f,
-        -1.0f, 0.0f, 0.0f,
-        -1.0f, 0.0f, 0.0f};
+    -1.0f, 0.0f, 0.0f,
+    -1.0f, 0.0f, 0.0f,
+    -1.0f, 0.0f, 0.0f};
 
 // note: Yes, the implementation of the world model is dirty.
 // todo: reimplement as chunks
@@ -181,10 +183,12 @@ static float *GetCubeVertices(float x, float y, float z)
         -width / 2 + x, height / 2 + y, length / 2 + z,
         -width / 2 + x, height / 2 + y, -length / 2 + z,
         -width / 2 + x, -height / 2 + y, -length / 2 + z};
+
     for (int i = 0; i < 36 * 3; i++)
     {
         cubeVertices[i] = ref[i];
     }
+    
     return cubeVertices;
 }
 
@@ -240,7 +244,7 @@ Model GetWorldModel(int *world)
     mesh.normals = (float *)RL_MALLOC(normalsCount * sizeof(float));
     memcpy(mesh.normals, normals, normalsCount * sizeof(float));
 
-    mesh.vertexCount = verticesCount / 3; // fixme: Why divide by 3 ???
+    mesh.vertexCount = verticesCount / 3;         // fixme: Why divide by 3 ???
     mesh.triangleCount = (verticesCount / 3) / 2; // fixme: Why divide by 3 and 2 ???
 
     RL_FREE(vertices);
