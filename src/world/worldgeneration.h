@@ -3,8 +3,8 @@
 #ifndef RAYCRAFT_WORLDGENERATION_H
 #define RAYCRAFT_WORLDGENERATION_H
 
-#define WORLD_MAX_X 220
-#define WORLD_MAX_Z 220
+#define WORLD_MAX_X 100
+#define WORLD_MAX_Z 100
 #define WORLD_MAX_Y 10
 
 #include <raylib.h>

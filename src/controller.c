@@ -30,7 +30,7 @@ bool isColliderInDirection(Vector3 position, Vector3 direction, int *world)
            GetWorldCubeV(world, Vector3Add(position, Vector3Add(direction, (Vector3){ 0,-1, 0})));
 }
 
-void InitializeController(struct Controller *controller, int *world)
+void InitializeController(Controller *controller, int *world)
 {
     controller->cam.position = (Vector3){1.0f, 10.0f, 1.0f};
     controller->cam.target = (Vector3){5.0f, 10.0f, 5.0f};
@@ -42,7 +42,7 @@ void InitializeController(struct Controller *controller, int *world)
     lastMousePos = GetMousePosition();
 }
 
-void UpdateController(struct Controller *controller)
+void UpdateController(Controller *controller)
 {
     // -------------------- Rotation stuff --------------------
     Vector2 mouseMovement = Vector2Subtract(GetMousePosition(), lastMousePos);
@@ -142,7 +142,7 @@ void UpdateController(struct Controller *controller)
     controller->cam.target.z = controller->cam.position.z - transform.m14;
 }
 
-Vector3 GetPlayerBlockPos(struct Controller *controller)
+Vector3 GetPlayerBlockPos(Controller *controller)
 {
     return (Vector3){roundf(controller->cam.position.x),
                      roundf(controller->cam.position.y - 1),

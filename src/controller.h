@@ -13,15 +13,15 @@
 #define PLAYER_MOVEMENT_SENSITIVITY 3
 #define CAMERA_MOUSE_MOVE_SENSITIVITY 0.01f
 
-struct Controller
+typedef struct Controller
 {
     struct Vector3 rotation;
     struct Camera3D cam;
     int *world;
-};
+} Controller;
 
-void InitializeController(struct Controller *controller, int *world);
-void UpdateController(struct Controller *controller);
-Vector3 GetPlayerBlockPos(struct Controller *controller);
+void InitializeController(Controller *controller, int *world);
+void UpdateController(Controller *controller);
+Vector3 GetPlayerBlockPos(Controller *controller);
 
 #endif //RAYCRAFT_CONTROLLER_H

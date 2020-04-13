@@ -17,8 +17,10 @@ int main(void)
     int *world = GenerateWorld();
     Model worldModel = GetWorldModel(world);
 
-    struct Controller controller;
+    Controller controller;
     InitializeController(&controller, world);
+
+    DisableCursor();
 
     while (!WindowShouldClose())
     {
