@@ -1,6 +1,3 @@
-#ifndef _WORLDMODEL_C_
-#define _WORLDMODEL_C_
-
 #include "worldmodel.h"
 
 #include <stdlib.h>
@@ -258,5 +255,3 @@ Model GetWorldModel(int *world)
 
     return worldModel;
 }
-
-#endif

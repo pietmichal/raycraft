@@ -1,6 +1,3 @@
-#ifndef _WORLDGENERATION_C_
-#define _WORLDGENERATION_C_
-
 #include "worldgeneration.h"
 
 #include "perlin.h"
@@ -59,5 +56,3 @@ int GetWorldCubeV(int *world, Vector3 pos)
 {
     return GetWorldCube(world, (int)pos.x, (int)pos.y, (int)pos.z);
 }
-
-#endif

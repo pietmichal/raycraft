@@ -5,7 +5,6 @@
 
 #include <raylib.h>
 
-static float *GetCubeVertices(float x, float y, float z);
 Model GetWorldModel(int *world);
 
 #endif //RAYCRAFT_WORLDMODEL_H

@@ -20,8 +20,6 @@ int main(void)
     struct Controller controller;
     InitializeController(&controller, world);
 
-    int i = 0;
-
     while (!WindowShouldClose())
     {
         BeginDrawing();
