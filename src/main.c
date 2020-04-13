@@ -41,7 +41,8 @@ int main(void)
             }
             EndMode3D();
 
-            DrawText("Raycraft\nMade by Michal (twitter: @pietmichal)\nPowered by raylib.com", 10, 10, 20, WHITE);
+            // DrawText("Made by Michal Pietraszko (twitter: @pietmichal)", 10, 10, 20, WHITE);
+                        
             DrawFPS(1920 / 2 - 90, 10);
         }
         EndDrawing();
