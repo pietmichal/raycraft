@@ -18,6 +18,7 @@ typedef struct Controller
     struct Vector3 rotation;
     struct Camera3D cam;
     int *world;
+    bool onGround;
 } Controller;
 
 void InitializeController(Controller *controller, int *world);

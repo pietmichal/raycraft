@@ -90,13 +90,17 @@ void UpdateController(Controller *controller)
     bool blockInLeft  = isColliderInDirection(GetPlayerBlockPos(controller), (Vector3){ 0, 0,-1}, controller->world);
 
     if (GetWorldCubeV(controller->world, Vector3Add(GetPlayerBlockPos(controller), (Vector3){0,-2, 0})) == 1)
-        movement = Vector3Subtract(movement, getForceToDirection((Vector3){ 0, 1, 0}, movement));
+    {
+        movement = Vector3Subtract(movement, getForceToDirection((Vector3) {0, 1, 0}, movement));
+        controller->onGround = true;
+    }
     else
     {
         blockInFront = isColliderInDirectionEx(GetPlayerBlockPos(controller), (Vector3){ 1, 0, 0}, controller->world);
         blockInBack  = isColliderInDirectionEx(GetPlayerBlockPos(controller), (Vector3){-1, 0, 0}, controller->world);
         blockInRight = isColliderInDirectionEx(GetPlayerBlockPos(controller), (Vector3){ 0, 0, 1}, controller->world);
         blockInLeft  = isColliderInDirectionEx(GetPlayerBlockPos(controller), (Vector3){ 0, 0,-1}, controller->world);
+        controller->onGround = false;
     }
 
     BoundingBox boundingBoxPlayer = {(Vector3){(controller->cam.position.x - 0.5f),
