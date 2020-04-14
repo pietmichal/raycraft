@@ -1,5 +1,3 @@
-// raycraft (c) Nikolas Wipper 2020
-
 #ifndef RAYCRAFT_WORLDGENERATION_H
 #define RAYCRAFT_WORLDGENERATION_H
 

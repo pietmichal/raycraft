@@ -1,5 +1,3 @@
-// raycraft (c) Nikolas Wipper 2020
-
 #include "util.h"
 
 float roundHalf(float f)

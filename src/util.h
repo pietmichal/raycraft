@@ -1,5 +1,3 @@
-// raycraft (c) Nikolas Wipper 2020
-
 #ifndef RAYCRAFT_UTIL_H
 #define RAYCRAFT_UTIL_H
 

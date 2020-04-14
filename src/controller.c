@@ -1,5 +1,3 @@
-// raycraft (c) Nikolas Wipper 2020
-
 #include "controller.h"
 
 #include <raymath.h>
