@@ -30,6 +30,13 @@ bool isColliderInDirection(Vector3 position, Vector3 direction, int *world)
            GetWorldCubeV(world, Vector3Add(position, Vector3Add(direction, (Vector3){ 0,-1, 0})));
 }
 
+bool isColliderInDirectionEx(Vector3 position, Vector3 direction, int *world)
+{
+    return GetWorldCubeV(world, Vector3Add(position, direction)) ||
+           GetWorldCubeV(world, Vector3Add(position, Vector3Add(direction, (Vector3){ 0,-1, 0}))) ||
+           GetWorldCubeV(world, Vector3Add(position, Vector3Add(direction, (Vector3){ 0,-2, 0})));
+}
+
 void InitializeController(Controller *controller, int *world)
 {
     controller->cam.position = (Vector3){50.0f, 75.0f, 50.0f};
@@ -73,7 +80,7 @@ void UpdateController(Controller *controller)
                   sinf(controller->rotation.x)*direction[2])/PLAYER_MOVEMENT_SENSITIVITY;
 
     if (IsKeyPressed(KEY_SPACE))
-        movement.y = 0.12f;
+        movement.y = 0.15f;
 
     // -------------------- Collision stuff --------------------
 
@@ -82,8 +89,18 @@ void UpdateController(Controller *controller)
     bool blockInRight = isColliderInDirection(GetPlayerBlockPos(controller), (Vector3){ 0, 0, 1}, controller->world);
     bool blockInLeft  = isColliderInDirection(GetPlayerBlockPos(controller), (Vector3){ 0, 0,-1}, controller->world);
 
+    if (GetWorldCubeV(controller->world, Vector3Add(GetPlayerBlockPos(controller), (Vector3){0,-2, 0})) == 1)
+        movement = Vector3Subtract(movement, getForceToDirection((Vector3){ 0, 1, 0}, movement));
+    else
+    {
+        blockInFront = isColliderInDirectionEx(GetPlayerBlockPos(controller), (Vector3){ 1, 0, 0}, controller->world);
+        blockInBack  = isColliderInDirectionEx(GetPlayerBlockPos(controller), (Vector3){-1, 0, 0}, controller->world);
+        blockInRight = isColliderInDirectionEx(GetPlayerBlockPos(controller), (Vector3){ 0, 0, 1}, controller->world);
+        blockInLeft  = isColliderInDirectionEx(GetPlayerBlockPos(controller), (Vector3){ 0, 0,-1}, controller->world);
+    }
+
     BoundingBox boundingBoxPlayer = {(Vector3){(controller->cam.position.x - 0.5f),
-                                               (controller->cam.position.y - 2.5f),
+                                               (controller->cam.position.y - 2.0f),
                                                (controller->cam.position.z - 0.5f)},
                                      (Vector3){(controller->cam.position.x + 0.5f),
                                                (controller->cam.position.y + 1.5f),
@@ -106,8 +123,7 @@ void UpdateController(Controller *controller)
     BoundingBox boundingBoxLeft  = {Vector3Add(boundingBoxPlayerBlock.min, (Vector3){ 0, 0,-1}),
                                     Vector3Add(boundingBoxPlayerBlock.max, (Vector3){ 0, 0,-1})};
 
-    DrawCubeWires(Vector3Subtract(GetPlayerBlockPos(controller), (Vector3){0, 1, 0}),
-                  1, -1, 1, RED);
+    DrawCubeWires(Vector3Subtract(GetPlayerBlockPos(controller), (Vector3){0, 1, 0}), 1, -1, 1, RED);
 
     if (blockInFront && CheckCollisionBoxes(boundingBoxPlayer, boundingBoxFront))
         movement = Vector3Subtract(movement, getForceToDirection((Vector3){-1, 0, 0}, movement));
@@ -120,9 +136,6 @@ void UpdateController(Controller *controller)
 
     if (blockInLeft && CheckCollisionBoxes(boundingBoxPlayer, boundingBoxLeft))
         movement = Vector3Subtract(movement, getForceToDirection((Vector3){ 0, 0, 1}, movement));
-
-    if (GetWorldCubeV(controller->world, Vector3Add(GetPlayerBlockPos(controller), (Vector3){0,-2, 0})) == 1)
-        movement = Vector3Subtract(movement, getForceToDirection((Vector3){ 0, 1, 0}, movement));
 
 
     controller->cam.position.x += movement.x / PLAYER_MOVEMENT_SENSITIVITY;
