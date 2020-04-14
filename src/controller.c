@@ -61,27 +61,6 @@ void UpdateController(Controller *controller)
 
     //controller->rotation.x = Clamp(controller->rotation.x, -40, 40);
 
-    // -------------------- Movement stuff --------------------
-
-    float direction[] = { IsKeyDown(FORWARD_KEY),
-                          IsKeyDown(BACKWARD_KEY),
-                          IsKeyDown(RIGHT_KEY),
-                          IsKeyDown(LEFT_KEY)};
-
-    movement = (Vector3){0, movement.y + GetFrameTime() * -0.5, 0};
-    movement.x = (sinf(controller->rotation.x)*direction[1] -
-                  sinf(controller->rotation.x)*direction[0] -
-                  cosf(controller->rotation.x)*direction[3] +
-                  cosf(controller->rotation.x)*direction[2])/PLAYER_MOVEMENT_SENSITIVITY;
-
-    movement.z = (cosf(controller->rotation.x)*direction[1] -
-                  cosf(controller->rotation.x)*direction[0] +
-                  sinf(controller->rotation.x)*direction[3] -
-                  sinf(controller->rotation.x)*direction[2])/PLAYER_MOVEMENT_SENSITIVITY;
-
-    if (IsKeyPressed(KEY_SPACE))
-        movement.y = 0.15f;
-
     // -------------------- Collision stuff --------------------
 
     bool blockInFront = isColliderInDirection(GetPlayerBlockPos(controller), (Vector3){ 1, 0, 0}, controller->world);
@@ -95,12 +74,14 @@ void UpdateController(Controller *controller)
         controller->onGround = true;
     }
     else
+        controller->onGround = false;
+
+    if (!controller->onGround)
     {
         blockInFront = isColliderInDirectionEx(GetPlayerBlockPos(controller), (Vector3){ 1, 0, 0}, controller->world);
         blockInBack  = isColliderInDirectionEx(GetPlayerBlockPos(controller), (Vector3){-1, 0, 0}, controller->world);
         blockInRight = isColliderInDirectionEx(GetPlayerBlockPos(controller), (Vector3){ 0, 0, 1}, controller->world);
         blockInLeft  = isColliderInDirectionEx(GetPlayerBlockPos(controller), (Vector3){ 0, 0,-1}, controller->world);
-        controller->onGround = false;
     }
 
     BoundingBox boundingBoxPlayer = {(Vector3){(controller->cam.position.x - 0.5f),
@@ -147,6 +128,27 @@ void UpdateController(Controller *controller)
     controller->cam.position.y += movement.y;
 
     controller->cam.position.z += movement.z / PLAYER_MOVEMENT_SENSITIVITY;
+
+    // -------------------- Movement stuff --------------------
+
+    float direction[] = { IsKeyDown(FORWARD_KEY),
+                          IsKeyDown(BACKWARD_KEY),
+                          IsKeyDown(RIGHT_KEY),
+                          IsKeyDown(LEFT_KEY)};
+
+    movement = (Vector3){0, movement.y + GetFrameTime() * -0.5, 0};
+    movement.x = (sinf(controller->rotation.x)*direction[1] -
+                  sinf(controller->rotation.x)*direction[0] -
+                  cosf(controller->rotation.x)*direction[3] +
+                  cosf(controller->rotation.x)*direction[2])/PLAYER_MOVEMENT_SENSITIVITY;
+
+    movement.z = (cosf(controller->rotation.x)*direction[1] -
+                  cosf(controller->rotation.x)*direction[0] +
+                  sinf(controller->rotation.x)*direction[3] -
+                  sinf(controller->rotation.x)*direction[2])/PLAYER_MOVEMENT_SENSITIVITY;
+
+    if (IsKeyPressed(KEY_SPACE) && controller->onGround)
+        movement.y = 0.15f;
 
     // -------------------- Retarget stuff --------------------
 
