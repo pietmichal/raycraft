@@ -10,7 +10,9 @@
 			"math.h": "c",
 			"blocks.h": "c",
 			"stdio.h": "c",
-			"*.m": "c"
+			"*.m": "c",
+			"camera.h": "c",
+			"gamecamera.h": "c"
 		}
 	}
 }

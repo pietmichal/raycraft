@@ -1,9 +1,9 @@
 #include "world/worldgeneration.h"
 #include "world/worldmodel.h"
-#include "controller.h"
 #include "util.h"
-
-#include <raymath.h>
+#include "gamecamera.h"
+#include "player.h"
+#include "raymath.h"
 
 int main(void)
 {
@@ -17,20 +17,23 @@ int main(void)
     int *world = GenerateWorld();
     Model worldModel = GetWorldModel(world);
 
-    Controller controller;
-    InitializeController(&controller, world);
+    GameCamera *gameCamera = CreateGameCamera((Vector3){50.0f, 50.0f, 50.0f});
+    Player *player = CreatePlayer((Vector3){20.0f, 20.0f, 20.0f});
 
     DisableCursor();
 
     while (!WindowShouldClose())
     {
+
+        UpdatePlayer(player);
+        // UpdateGameCamera(camera);
+
         BeginDrawing();
         {
             ClearBackground(SKYBLUE);
 
-            BeginMode3D(controller.cam);
+            BeginMode3D(gameCamera->camera);
             {
-                UpdateController(&controller);
                 // Clouds
                 DrawCube((Vector3){600.0f, 200.0f, 600.0f}, 100.0f, 10.0f, 37.0f, WHITE);
                 DrawCube((Vector3){250.0f, 200.0f, 150.0f}, 49.0f, 10.0f, 40.0f, WHITE);
@@ -40,6 +43,9 @@ int main(void)
                 DrawCube((Vector3){50.0f, 200.0f, 30.0f}, 30.0f, 10.0f, 37.0f, WHITE);
                 // World
                 DrawModel(worldModel, (Vector3){0, 0, 0}, 1.0f, WHITE);
+                // Player
+                DrawCubeWiresV(player->position, player->size, RED);
+            
             }
             EndMode3D();
 
