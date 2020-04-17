@@ -17,7 +17,7 @@ int main(void)
     int *world = GenerateWorld();
     Model worldModel = GetWorldModel(world);
 
-    GameCamera *gameCamera = CreateGameCamera((Vector3){50.0f, 50.0f, 50.0f});
+    GameCamera *gameCamera = CreateGameCamera();
     Player *player = CreatePlayer((Vector3){20.0f, 20.0f, 20.0f});
 
     DisableCursor();
@@ -25,8 +25,8 @@ int main(void)
     while (!WindowShouldClose())
     {
 
-        UpdatePlayer(player);
-        // UpdateGameCamera(camera);
+        UpdatePlayer(player, world);
+        UpdateGameCamera(gameCamera, player);
 
         BeginDrawing();
         {

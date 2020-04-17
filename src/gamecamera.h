@@ -2,15 +2,15 @@
 #define RAYCRAFT_CAMERA_H
 
 #include "raylib.h"
+#include "player.h"
 
 typedef struct GameCamera
 {
     struct Camera3D camera;
-    Vector3 rotation;
 } GameCamera;
 
 
-GameCamera *CreateGameCamera(Vector3 position);
-void AttachGameCameraToPlayer(GameCamera *gameCamera, void *player);
+GameCamera *CreateGameCamera();
+void UpdateGameCamera(GameCamera *gameCamera, Player *player);
 
 #endif

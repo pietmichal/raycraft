@@ -6,9 +6,6 @@
 #include <raymath.h>
 #include <stdlib.h>
 
-// todo: decide if (x,y,z) or (x,z,y)
-// right now I'm just making cryptic assumptions in the code
-
 int GetWorldCube(int *world, int x, int y, int z)
 {
     if (x < WORLD_MAX_X && x >= 0 &&
@@ -50,6 +47,16 @@ int *GenerateWorld()
     }
 
     return world;
+}
+
+Vector3 GetWorldPosition(Vector3 position)
+{
+    // note: assuming that world cube size is 1x1x1
+    return (Vector3){
+        roundf(position.x),
+        roundf(position.y),
+        roundf(position.z)
+    };
 }
 
 int GetWorldCubeV(int *world, Vector3 pos)

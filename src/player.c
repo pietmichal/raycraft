@@ -2,6 +2,9 @@
 #include "raylib.h"
 #include "stdlib.h"
 #include "math.h"
+#include "world/worldgeneration.h"
+
+static Vector2 previousMousePosition = {0};
 
 Player *CreatePlayer(Vector3 position)
 {
@@ -16,8 +19,13 @@ Player *CreatePlayer(Vector3 position)
     return player;
 }
 
-void UpdatePlayer(Player *player)
+static void HandlePlayerMovement(Player *player)
 {
+
+    Vector2 currentMousePosition = GetMousePosition();
+    Vector2 mouseMovement = Vector2Subtract(currentMousePosition, previousMousePosition);
+    player->rotation.x += mouseMovement.x * -0.01f; // todo: remove magic number and use math
+    previousMousePosition = currentMousePosition;
 
     if (IsKeyDown(FORWARD_KEY))
     {
@@ -50,4 +58,16 @@ void UpdatePlayer(Player *player)
     player->position.x += player->velocity.x * GetFrameTime();
     player->position.y += player->velocity.y * GetFrameTime();
     player->position.z += player->velocity.z * GetFrameTime();
+}
+
+static void HandlePlayerWorldCollision(Player *player, int *world)
+{
+    Vector3 playerWorldPosition = GetWorldPosition(player->position);
+    // todo: get colliding blocks and push out
+}
+
+void UpdatePlayer(Player *player, int *world)
+{
+    HandlePlayerMovement(player);
+    HandlePlayerWorldCollision(player, world);
 }

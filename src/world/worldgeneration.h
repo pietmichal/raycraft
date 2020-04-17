@@ -14,5 +14,6 @@ int GetWorldCube(int *world, int x, int y, int z);
 void SetWorldCube(int *world, int x, int y, int z, int value);
 int *GenerateWorld();
 int GetWorldCubeV(int *world, Vector3 pos);
+Vector3 GetWorldPosition(Vector3 position);
 
 #endif //RAYCRAFT_WORLDGENERATION_H

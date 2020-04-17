@@ -81,7 +81,10 @@ static void HandleMovement(Controller *controller)
 void UpdateController(Controller *controller)
 {
     Vector2 currentMousePosition = GetMousePosition();
-    RotateController(controller, currentMousePosition, previousMousePosition);
+    Vector2 mouseMovement = Vector2Subtract(currentMousePosition, previousMousePosition);
+    controller->rotation.x += mouseMovement.x * -CAMERA_MOUSE_MOVE_SENSITIVITY;
+    controller->rotation.y += mouseMovement.y * -CAMERA_MOUSE_MOVE_SENSITIVITY;
+    controller->rotation.y = Clamp(controller->rotation.y, -1, 1);    
     previousMousePosition = currentMousePosition;
 
     HandleMovement(controller);

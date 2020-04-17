@@ -17,6 +17,6 @@ typedef struct Player {
 } Player;
 
 Player *CreatePlayer(Vector3 position);
-void UpdatePlayer(Player* player);
+void UpdatePlayer(Player* player, int *world);
 
 #endif
