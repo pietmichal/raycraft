@@ -11,8 +11,8 @@
 typedef struct Player {
     Vector3 position;
     Vector3 size;
-    Vector3 rotation;
     Vector3 velocity;
+    float yaw;
     float friction; // Note: keep it in the player for simplicity's sake
 } Player;
 

@@ -3,15 +3,15 @@
 #include "stdlib.h"
 #include "math.h"
 #include "world/worldgeneration.h"
-
-static Vector2 previousMousePosition = {0};
+#include "game_mouse.h"
+#include "raymath.h"
 
 Player *CreatePlayer(Vector3 position)
 {
     Player *player = RL_MALLOC(sizeof(Player));
 
     player->position = position;
-    player->rotation = (Vector3){0};
+    player->yaw = 0.0f;
     player->size = (Vector3){1.0f, 1.2f, 1.0f};
     player->velocity = (Vector3){0};
     player->friction = 10.0f;
@@ -21,11 +21,7 @@ Player *CreatePlayer(Vector3 position)
 
 static void HandlePlayerMovement(Player *player)
 {
-
-    Vector2 currentMousePosition = GetMousePosition();
-    Vector2 mouseMovement = Vector2Subtract(currentMousePosition, previousMousePosition);
-    player->rotation.x += mouseMovement.x * -0.01f; // todo: remove magic number and use math
-    previousMousePosition = currentMousePosition;
+    player->yaw -= GetMouseMovement().x;
 
     if (IsKeyDown(FORWARD_KEY))
     {
@@ -51,6 +47,7 @@ static void HandlePlayerMovement(Player *player)
     player->velocity.y -= GetFrameTime() * player->friction;
     player->velocity.z -= GetFrameTime() * player->friction;
 
+    // todo: Make velocity dependent on yaw
     player->velocity.x = fmaxf(player->velocity.x, 0);
     player->velocity.y = fmaxf(player->velocity.y, 0);
     player->velocity.z = fmaxf(player->velocity.z, 0);

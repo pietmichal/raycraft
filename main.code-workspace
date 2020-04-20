@@ -12,7 +12,9 @@
 			"stdio.h": "c",
 			"*.m": "c",
 			"camera.h": "c",
-			"gamecamera.h": "c"
+			"gamecamera.h": "c",
+			"raymath.h": "c",
+			"game_camera.h": "c"
 		}
 	}
 }

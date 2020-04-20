@@ -1,7 +1,8 @@
 #include "world/worldgeneration.h"
 #include "world/worldmodel.h"
 #include "util.h"
-#include "gamecamera.h"
+#include "game_mouse.h"
+#include "game_camera.h"
 #include "player.h"
 #include "raymath.h"
 
@@ -25,6 +26,7 @@ int main(void)
     while (!WindowShouldClose())
     {
 
+        UpdateMouseMovement();
         UpdatePlayer(player, world);
         UpdateGameCamera(gameCamera, player);
 

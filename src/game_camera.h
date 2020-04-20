@@ -7,6 +7,7 @@
 typedef struct GameCamera
 {
     struct Camera3D camera;
+    Vector3 rotation;
 } GameCamera;
 
 
