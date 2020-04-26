@@ -22,6 +22,7 @@ Player *CreatePlayer(Vector3 position)
 static void HandlePlayerMovement(Player *player)
 {
     player->yaw -= GetMouseMovement().x;
+    player->velocity = Vector3Zero();
 
     if (IsKeyDown(FORWARD_KEY))
     {
@@ -43,18 +44,9 @@ static void HandlePlayerMovement(Player *player)
         player->velocity.z = -3;
     }
 
-    player->velocity.x -= GetFrameTime() * player->friction;
-    player->velocity.y -= GetFrameTime() * player->friction;
-    player->velocity.z -= GetFrameTime() * player->friction;
-
-    // todo: Make velocity dependent on yaw
-    player->velocity.x = fmaxf(player->velocity.x, 0);
-    player->velocity.y = fmaxf(player->velocity.y, 0);
-    player->velocity.z = fmaxf(player->velocity.z, 0);
-
-    player->position.x += player->velocity.x * GetFrameTime();
+    player->position.x -= (player->velocity.x * sinf(player->yaw) - player->velocity.z * cosf(player->yaw)) * GetFrameTime();
+    player->position.z -= (player->velocity.x * cosf(player->yaw) + player->velocity.z * sinf(player->yaw)) * GetFrameTime();
     player->position.y += player->velocity.y * GetFrameTime();
-    player->position.z += player->velocity.z * GetFrameTime();
 }
 
 static void HandlePlayerWorldCollision(Player *player, int *world)
