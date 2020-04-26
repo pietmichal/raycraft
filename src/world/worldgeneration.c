@@ -48,18 +48,3 @@ int *GenerateWorld()
 
     return world;
 }
-
-Vector3 GetWorldPosition(Vector3 position)
-{
-    // note: assuming that world cube size is 1x1x1
-    return (Vector3){
-        roundf(position.x),
-        roundf(position.y),
-        roundf(position.z)
-    };
-}
-
-int GetWorldCubeV(int *world, Vector3 pos)
-{
-    return GetWorldCube(world, (int)pos.x, (int)pos.y, (int)pos.z);
-}

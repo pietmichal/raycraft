@@ -51,8 +51,7 @@ int main(void)
             }
             EndMode3D();
 
-            Vector3 playerWorldPosition = GetWorldPosition(player->position);
-            DrawText(FormatText("x: %f (grid: %f)\ny: %f (grid: %f)\nz: %f (grid: %f)", player->position.x, playerWorldPosition.x, player->position.y, playerWorldPosition.y, player->position.z, playerWorldPosition.z), 10, 10, 16, WHITE);
+            DrawText(FormatText("x: %f\ny: %f\nz: %f", player->position.x, player->position.y, player->position.z), 10, 10, 16, WHITE);
                         
             DrawFPS(1920 / 2 - 90, 10);
         }
