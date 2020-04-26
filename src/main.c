@@ -1,6 +1,5 @@
 #include "world/worldgeneration.h"
 #include "world/worldmodel.h"
-#include "util.h"
 #include "game_mouse.h"
 #include "game_camera.h"
 #include "player.h"
