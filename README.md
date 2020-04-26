@@ -6,13 +6,9 @@ Minecraft-clone made using [raylib](https://github.com/raysan5/raylib).
 
 Work in progress.
 
-# Notes
-
-- coordinates start from the middle
-
 ## Game todo
 
-- Update controller abstraction (player height, rotation issues, )
+- gravity + collision
 - Destroying blocks
 - Placing blocks
 

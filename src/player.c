@@ -44,6 +44,8 @@ static void HandlePlayerMovement(Player *player)
         player->velocity.z = -3;
     }
 
+    player->velocity.y = -3;
+
     player->position.x -= (player->velocity.x * sinf(player->yaw) - player->velocity.z * cosf(player->yaw)) * GetFrameTime();
     player->position.z -= (player->velocity.x * cosf(player->yaw) + player->velocity.z * sinf(player->yaw)) * GetFrameTime();
     player->position.y += player->velocity.y * GetFrameTime();
@@ -52,7 +54,42 @@ static void HandlePlayerMovement(Player *player)
 static void HandlePlayerWorldCollision(Player *player, int *world)
 {
     Vector3 playerWorldPosition = GetWorldPosition(player->position);
-    // todo: get colliding blocks and push out
+    
+    int bottomBlock = GetWorldCube(world, playerWorldPosition.x, playerWorldPosition.y-1.0f, playerWorldPosition.z);
+
+    if (bottomBlock == 1)
+    {
+        player->position.y = playerWorldPosition.y + 0.2f;
+    }
+
+    int leftBlock = GetWorldCube(world, playerWorldPosition.x, playerWorldPosition.y, playerWorldPosition.z-1.0f);
+
+    if (leftBlock == 1)
+    {
+        player->position.z = playerWorldPosition.z;
+    }
+
+    int rightBlock = GetWorldCube(world, playerWorldPosition.x, playerWorldPosition.y, playerWorldPosition.z+1.0f);
+
+    if (rightBlock == 1)
+    {
+        player->position.z = playerWorldPosition.z;
+    }
+
+    int frontBlock = GetWorldCube(world, playerWorldPosition.x+1.0f, playerWorldPosition.y, playerWorldPosition.z);
+
+    if (frontBlock == 1)
+    {
+        player->position.x = playerWorldPosition.x;
+    }
+
+    int backBlock = GetWorldCube(world, playerWorldPosition.x-1.0f, playerWorldPosition.y, playerWorldPosition.z);
+
+    if (backBlock == 1)
+    {
+        player->position.x = playerWorldPosition.x;
+    }
+
 }
 
 void UpdatePlayer(Player *player, int *world)
