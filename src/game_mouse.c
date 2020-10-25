@@ -9,7 +9,7 @@
 static Vector2 previousMousePosition = (Vector2){0};
 static Vector2 mouseMovement = (Vector2){0};
 
-// Call ONCE at the beginning of every frame!
+// Important: Call ONCE at the beginning of every frame!
 void UpdateMouseMovement()
 {
     Vector2 currentMousePosition = GetMousePosition();

@@ -22,6 +22,7 @@ GameCamera *CreateGameCamera()
 void UpdateGameCamera(GameCamera *gameCamera, Player *player)
 {
     gameCamera->camera.position.x = player->position.x;
+    
     // Note: place camera on top of player's head.
     gameCamera->camera.position.y = player->position.y + (player->size.y/2);
     gameCamera->camera.position.z = player->position.z;
@@ -30,6 +31,8 @@ void UpdateGameCamera(GameCamera *gameCamera, Player *player)
     gameCamera->rotation.y -= GetMouseMovement().y;
 
     Matrix translation = MatrixTranslate(0, 0, 1);
+
+    // Note: y rotation is bound to a camera, x rotation is bound to the player
     Matrix rotation = MatrixRotateXYZ((Vector3){PI * 2 - gameCamera->rotation.y, PI * 2 - player->yaw, 0});
     Matrix transform = MatrixMultiply(translation, rotation);
 
